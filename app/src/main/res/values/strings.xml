@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Prophet</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_new_poem">NewPoemActivity</string>
+    <string name="title_hint">Title</string>
+    <string name="poem_hint">Type your poem here</string>
+    <string name="author_hint">Author</string>
 </resources>
