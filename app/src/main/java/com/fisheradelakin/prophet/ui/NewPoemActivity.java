@@ -78,6 +78,12 @@ public class NewPoemActivity extends AppCompatActivity {
                     Log.v(TAG, "Size of poem list is: " + poems.size());
                     super.onSuccess();
                 }
+
+                @Override
+                public void onError(Exception e) {
+                    e.printStackTrace();
+                    super.onError(e);
+                }
             });
             return true;
         }

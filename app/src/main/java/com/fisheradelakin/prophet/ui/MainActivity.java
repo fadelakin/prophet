@@ -4,16 +4,27 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.fisheradelakin.prophet.R;
+import com.fisheradelakin.prophet.adapters.PoemsAdapter;
+import com.fisheradelakin.prophet.model.Poem;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.realm.Realm;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity {
+
+    @Bind(R.id.poems_rv)
+    RecyclerView poemsRV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +43,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Realm realm = Realm.getInstance(this);
+        RealmQuery<Poem> realmQuery = realm.where(Poem.class);
+        RealmResults<Poem> poems = realmQuery.findAll();
+
+        PoemsAdapter adapter = new PoemsAdapter(this, poems);
+        poemsRV.setHasFixedSize(true);
+        poemsRV.setLayoutManager(new LinearLayoutManager(this));
+        poemsRV.setAdapter(adapter);
     }
 
     @Override
