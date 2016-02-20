@@ -37,7 +37,7 @@ public class NewPoemActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mRealm = Realm.getInstance(this);
+        mRealm = Realm.getDefaultInstance();
     }
 
     @Override
@@ -56,13 +56,10 @@ public class NewPoemActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            final RealmResults<Poem> poems = mRealm.where(Poem.class).findAll();
-            Log.v(TAG, "Size of poem list is: " + poems.size());
             Poem poem = new Poem();
             poem.setTitle(mTitleET.getText().toString());
             poem.setPoem(mPoemET.getText().toString());
             poem.setAuthor(mAuthorET.getText().toString());
-            Log.v(TAG, "Name of poem is: " + poem.getTitle());
             mRealm.beginTransaction();
             mRealm.copyToRealm(poem);
             mRealm.commitTransaction();
@@ -75,7 +72,7 @@ public class NewPoemActivity extends AppCompatActivity {
             }, new Realm.Transaction.Callback() {
                 @Override
                 public void onSuccess() {
-                    Log.v(TAG, "Size of poem list is: " + poems.size());
+                    Log.v(TAG, "Poem added to database");
                     super.onSuccess();
                 }
 

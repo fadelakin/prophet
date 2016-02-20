@@ -12,6 +12,7 @@ import com.fisheradelakin.prophet.model.Poem;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.realm.Realm;
 import io.realm.RealmResults;
 
 /**
@@ -44,7 +45,7 @@ public class PoemsAdapter extends RecyclerView.Adapter<PoemsAdapter.ViewHolder> 
         return mPoems.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener, View.OnClickListener {
 
         @Bind(R.id.poem_title_tv)
         TextView poemTitle;
@@ -53,6 +54,26 @@ public class PoemsAdapter extends RecyclerView.Adapter<PoemsAdapter.ViewHolder> 
             super(itemView);
 
             ButterKnife.bind(this, itemView);
+
+            itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            // delete poem
+            Realm realm = Realm.getDefaultInstance();
+            realm.beginTransaction();
+            Poem poem = mPoems.get(getLayoutPosition());
+            poem.removeFromRealm();
+            realm.commitTransaction();
+            notifyDataSetChanged();
+            return true;
         }
     }
 }

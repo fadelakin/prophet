@@ -10,21 +10,11 @@ import io.realm.annotations.Required;
  */
 public class Poem extends RealmObject implements Serializable {
 
-    /*@Required // id cannot be null
-    private long id;*/
     @Required // title cannot be null
     private String title;
     @Required // poem cannot be null
     private String poem;
     private String author; // author is optional
-
-    /*public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }*/
 
     public String getTitle() {
         return title;

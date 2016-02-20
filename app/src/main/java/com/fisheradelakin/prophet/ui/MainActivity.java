@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import com.fisheradelakin.prophet.R;
 import com.fisheradelakin.prophet.adapters.PoemsAdapter;
 import com.fisheradelakin.prophet.model.Poem;
+import com.fisheradelakin.prophet.util.DividerItemDecoration;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -44,13 +45,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Realm realm = Realm.getInstance(this);
+        Realm realm = Realm.getDefaultInstance();
         RealmQuery<Poem> realmQuery = realm.where(Poem.class);
         RealmResults<Poem> poems = realmQuery.findAll();
 
         PoemsAdapter adapter = new PoemsAdapter(this, poems);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
         poemsRV.setHasFixedSize(true);
-        poemsRV.setLayoutManager(new LinearLayoutManager(this));
+        poemsRV.setLayoutManager(layoutManager);
+        poemsRV.addItemDecoration(new DividerItemDecoration(this));
         poemsRV.setAdapter(adapter);
     }
 
