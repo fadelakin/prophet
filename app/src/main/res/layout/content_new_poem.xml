@@ -12,7 +12,8 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ui.NewPoemActivity"
     tools:showIn="@layout/activity_new_poem"
-    android:id="@+id/poem_view">
+    android:id="@+id/poem_view"
+    android:background="#FFF">
 
     <EditText android:layout_width="match_parent"
               android:layout_height="wrap_content"

@@ -119,7 +119,16 @@ public class NewPoemActivity extends AppCompatActivity {
 
     private void sharePoem() {
 
-        Bitmap bitmap = loadBitmapFromView(mPoemView, mPoemView.getWidth(), mPoemView.getHeight());
+        /*View v = mPoemView.getRootView();
+        v.setDrawingCacheEnabled(true);
+        Bitmap bitmap = v.getDrawingCache();*/
+
+        mAuthorET.setCursorVisible(false);
+        mPoemET.setCursorVisible(false);
+        mTitleET.setCursorVisible(false);
+
+        mPoemView.setDrawingCacheEnabled(true);
+        Bitmap bitmap = mPoemView.getDrawingCache();
 
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -138,18 +147,22 @@ public class NewPoemActivity extends AppCompatActivity {
             File file = new File(folder, "prophet" + timeStamp + ".png");
             try {
                 FileOutputStream fileOutputStream = new FileOutputStream(file);
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
                 fileOutputStream.flush();
                 fileOutputStream.close();
                 file.setReadable(true, false);
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
-                intent.setType("image/png");
+                intent.setType("image/jpeg");
                 startActivity(intent);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+            mAuthorET.setCursorVisible(true);
+            mPoemET.setCursorVisible(true);
+            mTitleET.setCursorVisible(true);
         }
     }
 
