@@ -5,4 +5,11 @@
     <string name="title_hint">Title</string>
     <string name="poem_hint">Type your poem here</string>
     <string name="author_hint">Author</string>
+    <string name="share_poem">Share Poem</string>
+    <string name="write_permission">This app needs to be able to save the screenshots to your device
+        for you to be able to share it.
+    </string>
+    <string name="request_permission">This app needs the ability to save screenshots to your
+        device.
+    </string>
 </resources>
