@@ -1,6 +1,7 @@
 package com.fisheradelakin.prophet.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.fisheradelakin.prophet.R;
 import com.fisheradelakin.prophet.model.Poem;
+import com.fisheradelakin.prophet.ui.NewPoemActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -61,7 +63,9 @@ public class PoemsAdapter extends RecyclerView.Adapter<PoemsAdapter.ViewHolder> 
 
         @Override
         public void onClick(View v) {
-
+            Intent intent = new Intent(mContext, NewPoemActivity.class);
+            intent.putExtra("time", mPoems.get(getLayoutPosition()).getTimestamp());
+            mContext.startActivity(intent);
         }
 
         @Override

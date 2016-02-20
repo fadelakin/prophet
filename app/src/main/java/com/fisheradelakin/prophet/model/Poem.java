@@ -14,6 +14,8 @@ public class Poem extends RealmObject implements Serializable {
     private String title;
     @Required // poem cannot be null
     private String poem;
+    @Required
+    private String timestamp;
     private String author; // author is optional
 
     public String getTitle() {
@@ -38,5 +40,13 @@ public class Poem extends RealmObject implements Serializable {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
 }

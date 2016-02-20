@@ -17,19 +17,33 @@
               android:layout_height="wrap_content"
               android:id="@+id/title_et"
               android:inputType="textCapCharacters"
-              android:hint="@string/title_hint"/>
+              android:hint="@string/title_hint"
+              android:textStyle="bold"
+              android:textSize="28sp"
+              android:textColor="#222"
+              android:background="@android:color/transparent"/>
 
     <EditText android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:id="@+id/poem_et"
               android:inputType="textMultiLine"
               android:layout_below="@id/title_et"
-              android:hint="@string/poem_hint"/>
+              android:hint="@string/poem_hint"
+              android:background="@android:color/transparent"
+              android:layout_marginTop="16dp"
+              android:textSize="18sp"
+              android:lineSpacingMultiplier="1.5"
+              tools:text="Hello it's me\nHow are you doing?\nWelcome to the show."/>
 
     <EditText android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:id="@+id/author_et"
-              android:layout_alignParentBottom="true"
-              android:hint="@string/author_hint"/>
+              android:layout_below="@id/poem_et"
+              android:hint="@string/author_hint"
+              android:background="@android:color/transparent"
+              android:layout_marginTop="16sp"
+              android:textSize="16sp"
+              android:textStyle="italic"
+              android:textColor="#727272"/>
 
 </RelativeLayout>
