@@ -12,4 +12,5 @@
     <string name="request_permission">This app needs the ability to save screenshots to your
         device.
     </string>
+    <string name="save_poem">Save Poem</string>
 </resources>

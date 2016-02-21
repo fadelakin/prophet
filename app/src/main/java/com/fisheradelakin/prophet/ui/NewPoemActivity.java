@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -16,9 +15,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.fisheradelakin.prophet.R;
 import com.fisheradelakin.prophet.model.Poem;
@@ -26,7 +25,6 @@ import com.fisheradelakin.prophet.util.ErrorDialog;
 import com.fisheradelakin.prophet.util.StorageConfirmationDialog;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -86,7 +84,7 @@ public class NewPoemActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_new_poem, menu);
         return true;
     }
 
@@ -98,7 +96,7 @@ public class NewPoemActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_save) {
             savePoem();
             return true;
         } else if (id == R.id.action_share) {
@@ -109,19 +107,7 @@ public class NewPoemActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public static Bitmap loadBitmapFromView(View v, int width, int height) {
-        Bitmap b = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        Canvas c = new Canvas(b);
-        v.layout(0, 0, v.getLayoutParams().width, v.getLayoutParams().height);
-        v.draw(c);
-        return b;
-    }
-
     private void sharePoem() {
-
-        /*View v = mPoemView.getRootView();
-        v.setDrawingCacheEnabled(true);
-        Bitmap bitmap = v.getDrawingCache();*/
 
         mAuthorET.setCursorVisible(false);
         mPoemET.setCursorVisible(false);
@@ -185,6 +171,7 @@ public class NewPoemActivity extends AppCompatActivity {
             @Override
             public void onSuccess() {
                 Log.v(TAG, "Poem added to database");
+                Toast.makeText(NewPoemActivity.this, "Poem saved", Toast.LENGTH_SHORT).show();
                 super.onSuccess();
             }
 
