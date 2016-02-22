@@ -38,15 +38,21 @@ import io.realm.RealmResults;
 
 public class NewPoemActivity extends AppCompatActivity {
 
+    // TODO: When the user confirms the permission, the share dialog should come up.
+    // TODO: So ask for permission
+    // TODO:    if yes, open share intent
+    // TODO:    if no, don't do anything or open dialog
+
     private static final String TAG = "NPA";
     private static final int WRITE_STORAGE_PERMISSION = 1;
     public static final String FRAGMENT_DIALOG = "dialog";
-    private Realm mRealm;
 
     @Bind(R.id.title_et) EditText mTitleET;
     @Bind(R.id.poem_et) EditText mPoemET;
     @Bind(R.id.author_et) EditText mAuthorET;
     @Bind(R.id.poem_view) RelativeLayout mPoemView;
+
+    private Realm mRealm;
     private Bitmap mBitmap;
 
     @Override
