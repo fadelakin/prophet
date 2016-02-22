@@ -47,6 +47,7 @@ public class NewPoemActivity extends AppCompatActivity {
     @Bind(R.id.poem_et) EditText mPoemET;
     @Bind(R.id.author_et) EditText mAuthorET;
     @Bind(R.id.poem_view) RelativeLayout mPoemView;
+    private Bitmap mBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,45 +118,49 @@ public class NewPoemActivity extends AppCompatActivity {
         mTitleET.setCursorVisible(false);
 
         mPoemView.setDrawingCacheEnabled(true);
-        Bitmap bitmap = mPoemView.getDrawingCache();
+        mBitmap = mPoemView.getDrawingCache();
 
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             requestWriteStoragePermission();
         } else {
-            File folder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Prophet");
-
-            if (!folder.exists()) {
-                folder.mkdir();
-                Log.i(TAG, "Folder doesn't exist but it does now.");
-            } else {
-                Log.i(TAG, "Folder exists");
-            }
-
-            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
-
-            File file = new File(folder, "prophet" + timeStamp + ".png");
-            try {
-                FileOutputStream fileOutputStream = new FileOutputStream(file);
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
-                fileOutputStream.flush();
-                fileOutputStream.close();
-                file.setReadable(true, false);
-
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
-                intent.setType("image/jpeg");
-
-                startActivity(intent);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            mAuthorET.setCursorVisible(true);
-            mPoemET.setCursorVisible(true);
-            mTitleET.setCursorVisible(true);
+            share(mBitmap);
         }
+    }
+
+    private void share(Bitmap bitmap) {
+        File folder = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "Prophet");
+
+        if (!folder.exists()) {
+            folder.mkdir();
+            Log.i(TAG, "Folder doesn't exist but it does now.");
+        } else {
+            Log.i(TAG, "Folder exists");
+        }
+
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
+
+        File file = new File(folder, "prophet" + timeStamp + ".png");
+        try {
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream);
+            fileOutputStream.flush();
+            fileOutputStream.close();
+            file.setReadable(true, false);
+
+            Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+            intent.setType("image/jpeg");
+
+            startActivity(intent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        mAuthorET.setCursorVisible(true);
+        mPoemET.setCursorVisible(true);
+        mTitleET.setCursorVisible(true);
     }
 
     private void savePoem() {
@@ -165,7 +170,7 @@ public class NewPoemActivity extends AppCompatActivity {
         poem.setPoem(mPoemET.getText().toString());
         poem.setAuthor(mAuthorET.getText().toString());
         poem.setTimestamp(new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date()));
-        
+
         mRealm.beginTransaction();
         mRealm.copyToRealm(poem);
         mRealm.commitTransaction();
@@ -209,6 +214,7 @@ public class NewPoemActivity extends AppCompatActivity {
             }
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            share(mBitmap);
         }
     }
 
