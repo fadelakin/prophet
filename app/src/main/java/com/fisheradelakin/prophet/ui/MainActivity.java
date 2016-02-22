@@ -24,8 +24,7 @@ import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity {
 
-    @Bind(R.id.poems_rv)
-    RecyclerView poemsRV;
+    @Bind(R.id.poems_rv) RecyclerView poemsRV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +49,11 @@ public class MainActivity extends AppCompatActivity {
         RealmResults<Poem> poems = realmQuery.findAll();
 
         PoemsAdapter adapter = new PoemsAdapter(this, poems);
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
+
         poemsRV.setHasFixedSize(true);
         poemsRV.setLayoutManager(layoutManager);
         poemsRV.addItemDecoration(new DividerItemDecoration(this));

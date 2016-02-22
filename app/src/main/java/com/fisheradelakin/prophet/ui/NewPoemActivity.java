@@ -66,9 +66,12 @@ public class NewPoemActivity extends AppCompatActivity {
 
         String poemTimestamp = getIntent().getStringExtra("time");
         if (poemTimestamp != null) {
+
             Realm realm = Realm.getDefaultInstance();
+
             RealmQuery<Poem> query = realm.where(Poem.class);
             query.equalTo("timestamp", poemTimestamp);
+
             RealmResults<Poem> results = query.findAll();
             if (results.size() > 0) {
                 Poem poem = results.get(0);
@@ -130,6 +133,7 @@ public class NewPoemActivity extends AppCompatActivity {
             }
 
             String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
+
             File file = new File(folder, "prophet" + timeStamp + ".png");
             try {
                 FileOutputStream fileOutputStream = new FileOutputStream(file);
@@ -137,10 +141,12 @@ public class NewPoemActivity extends AppCompatActivity {
                 fileOutputStream.flush();
                 fileOutputStream.close();
                 file.setReadable(true, false);
+
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
                 intent.setType("image/jpeg");
+
                 startActivity(intent);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -154,10 +160,12 @@ public class NewPoemActivity extends AppCompatActivity {
 
     private void savePoem() {
         Poem poem = new Poem();
+
         poem.setTitle(mTitleET.getText().toString());
         poem.setPoem(mPoemET.getText().toString());
         poem.setAuthor(mAuthorET.getText().toString());
         poem.setTimestamp(new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date()));
+        
         mRealm.beginTransaction();
         mRealm.copyToRealm(poem);
         mRealm.commitTransaction();
